@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FreeToolBox - Free online tools for text, image, and file manipulation">
+    <title>FreeToolBox - Free Online Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                    </svg>
+                    <h1 class="text-2xl font-bold text-gray-800">FreeToolBox</h1>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                    <a href="tools/text-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Text Tools</a>
+                    <a href="tools/image-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Image Tools</a>
+                    <a href="tools/file-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium">File Tools</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-white border-t fixed right-0 top-16 h-full w-64 shadow-lg">
+            <div class="flex flex-col p-4 space-y-4">
+                <a href="index.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">Home</a>
+                <a href="tools/text-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">Text Tools</a>
+                <a href="tools/image-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">Image Tools</a>
+                <a href="tools/file-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">File Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Free Online Tools</h2>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">Simple, fast, and secure tools for everyday tasks</p>
+            
+            <!-- Search Bar -->
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="search-input"
+                        placeholder="Search for tools..." 
+                        class="search-input w-full px-6 py-4 rounded-full text-gray-800 text-lg focus:outline-none focus:ring-4 focus:ring-blue-300"
+                        oninput="searchTools()"
+                    >
+                    <button onclick="clearSearch()" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ad Placeholder - Top -->
+    <div class="container mx-auto px-4 mt-8">
+        <div class="ad-slot bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+            <p class="text-gray-500 text-sm">Advertisement Space</p>
+        </div>
+    </div>
+
+    <!-- Tools Grid -->
+    <section class="container mx-auto px-4 py-12">
+        <h3 class="text-3xl font-bold text-gray-800 mb-8 text-center">All Tools</h3>
+        
+        <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Word Counter -->
+            <div class="tool-card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
+                <div class="flex flex-col items-center">
+                    <svg class="tool-icon text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Word Counter</h3>
+                    <p class="text-gray-600 text-center mb-4">Count words, characters, sentences, and paragraphs in your text</p>
+                    <a href="tools/word-counter.html" class="btn-primary text-white px-6 py-2 rounded-full font-medium hover:opacity-90">
+                        Use Tool
+                    </a>
+                </div>
+            </div>
+
+            <!-- Text Case Converter -->
+            <div class="tool-card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
+                <div class="flex flex-col items-center">
+                    <svg class="tool-icon text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Text Case Converter</h3>
+                    <p class="text-gray-600 text-center mb-4">Convert text to UPPERCASE, lowercase, or Capitalize Each Word</p>
+                    <a href="tools/text-case-converter.html" class="btn-primary text-white px-6 py-2 rounded-full font-medium hover:opacity-90">
+                        Use Tool
+                    </a>
+                </div>
+            </div>
+
+            <!-- Character Counter -->
+            <div class="tool-card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
+                <div class="flex flex-col items-center">
+                    <svg class="tool-icon text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Character Counter</h3>
+                    <p class="text-gray-600 text-center mb-4">Count total characters, characters without spaces, and more</p>
+                    <a href="tools/character-counter.html" class="btn-primary text-white px-6 py-2 rounded-full font-medium hover:opacity-90">
+                        Use Tool
+                    </a>
+                </div>
+            </div>
+
+            <!-- Image Compressor -->
+            <div class="tool-card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
+                <div class="flex flex-col items-center">
+                    <svg class="tool-icon text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Image Compressor</h3>
+                    <p class="text-gray-600 text-center mb-4">Reduce image file size while maintaining quality</p>
+                    <a href="tools/image-compressor.html" class="btn-primary text-white px-6 py-2 rounded-full font-medium hover:opacity-90">
+                        Use Tool
+                    </a>
+                </div>
+            </div>
+
+            <!-- Image to Base64 -->
+            <div class="tool-card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
+                <div class="flex flex-col items-center">
+                    <svg class="tool-icon text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Image to Base64</h3>
+                    <p class="text-gray-600 text-center mb-4">Convert images to Base64 encoded strings</p>
+                    <a href="tools/image-to-base64.html" class="btn-primary text-white px-6 py-2 rounded-full font-medium hover:opacity-90">
+                        Use Tool
+                    </a>
+                </div>
+            </div>
+
+            <!-- PDF Merger -->
+            <div class="tool-card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
+                <div class="flex flex-col items-center">
+                    <svg class="tool-icon text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">PDF Merger</h3>
+                    <p class="text-gray-600 text-center mb-4">Merge multiple PDF files into a single document</p>
+                    <a href="tools/pdf-merger.html" class="btn-primary text-white px-6 py-2 rounded-full font-medium hover:opacity-90">
+                        Use Tool
+                    </a>
+                </div>
+            </div>
+
+            <!-- Image to PDF -->
+            <div class="tool-card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all">
+                <div class="flex flex-col items-center">
+                    <svg class="tool-icon text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Image to PDF</h3>
+                    <p class="text-gray-600 text-center mb-4">Convert multiple images into a single PDF file</p>
+                    <a href="tools/image-to-pdf.html" class="btn-primary text-white px-6 py-2 rounded-full font-medium hover:opacity-90">
+                        Use Tool
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="no-results hidden">
+            <svg class="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="text-xl">No tools found matching your search</p>
+        </div>
+    </section>
+
+    <!-- Ad Placeholder - Bottom -->
+    <div class="container mx-auto px-4 mb-8">
+        <div class="ad-slot bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+            <p class="text-gray-500 text-sm">Advertisement Space</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">FreeToolBox</h4>
+                    <p class="text-gray-400">Free online tools for text, image, and file manipulation. Fast, secure, and 100% client-side.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="tools/text-tools.html" class="text-gray-400 hover:text-white">Text Tools</a></li>
+                        <li><a href="tools/image-tools.html" class="text-gray-400 hover:text-white">Image Tools</a></li>
+                        <li><a href="tools/file-tools.html" class="text-gray-400 hover:text-white">File Tools</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">About</h4>
+                    <p class="text-gray-400">All tools run 100% in your browser. Your data never leaves your device.</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 FreeToolBox. All rights reserved.</p>
+            </div>
+            
+            <!-- Footer Ad -->
+            <div class="ad-slot bg-gray-700 border-2 border-dashed border-gray-600 rounded-lg p-6 mt-6 text-center">
+                <p class="text-gray-500 text-sm">Advertisement Space</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
