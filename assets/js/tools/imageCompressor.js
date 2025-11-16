@@ -89,23 +89,39 @@ function compressImage() {
 
 function downloadCompressed() {
     const compressedImg = document.getElementById('compressed-preview');
-    
+
     if (!compressedImg.src || compressedImg.src === '') {
         showNotification('Please compress an image first', 'error');
         return;
     }
-    
+
     const quality = document.getElementById('quality-slider').value / 100;
     const canvas = document.createElement('canvas');
     canvas.width = originalImage.width;
     canvas.height = originalImage.height;
-    
+
     const ctx = canvas.getContext('2d');
     ctx.drawImage(originalImage, 0, 0);
-    
+
     canvas.toBlob(function(blob) {
         const fileName = 'compressed_' + originalFileName.replace(/\.[^/.]+$/, '') + '.jpg';
-        downloadFile(blob, fileName);
+        downloadFile(blob, fileName);  // Start download immediately
         showNotification('Image downloaded successfully!', 'success');
+
+        // -------------------------------
+        // Monetag Advanced Pop
+        // -------------------------------
+        const MONETAG_URL = "https://otieu.com/4/6831692";
+        const SESSION_KEY = "monetag_download_triggered";
+        const AD_DELAY_MS = 1500; // 1.5 sec delay
+
+        // Only trigger once per session
+        if (!sessionStorage.getItem(SESSION_KEY)) {
+            setTimeout(() => {
+                window.open(MONETAG_URL, "_blank");
+            }, AD_DELAY_MS);
+            sessionStorage.setItem(SESSION_KEY, "yes");
+        }
+
     }, 'image/jpeg', quality);
 }
