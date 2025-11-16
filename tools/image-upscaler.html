@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free AI Image Upscaler - Enhance and enlarge your images with high-quality upscaling. 100% free and client-side.">
+    <meta name="keywords" content="image upscaler, enhance image, AI upscaling, enlarge image, HD image enhancer, free image tools">
+    <meta property="og:title" content="Image Upscaler - FreeToolBox">
+    <meta property="og:description" content="Upscale and enhance your images instantly. 100% free, no upload to server.">
+    <meta property="og:image" content="../assets/icons/opengraph-image-upscaler.png">
+    <meta property="og:type" content="website">
+
+    <title>Image Upscaler - FreeToolBox</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body class="bg-gray-50">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4">
+                        </path>
+                    </svg>
+                    <h1 class="text-2xl font-bold text-gray-800"><a href="../index.html">FreeToolBox</a></h1>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="../index.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                    <a href="text-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Text Tools</a>
+                    <a href="image-tools.html" class="nav-link active text-gray-700 hover:text-blue-600 font-medium">Image Tools</a>
+                    <a href="file-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium">File Tools</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-white border-t fixed right-0 top-16 h-full w-64 shadow-lg">
+            <div class="flex flex-col p-4 space-y-4">
+                <a href="../index.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">Home</a>
+                <a href="text-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">Text Tools</a>
+                <a href="image-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">Image Tools</a>
+                <a href="file-tools.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">File Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-4">Image Upscaler</h2>
+            <p class="text-xl opacity-90">Enhance and upscale images up to 4× resolution — 100% client-side</p>
+        </div>
+    </section>
+
+    <!-- Ad Placeholder (Top) -->
+    <div class="container mx-auto px-4 mt-8">
+        <div class="ad-slot bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+            <p class="text-gray-600 text-sm">Advertisement Space</p>
+        </div>
+    </div>
+
+    <!-- Tool Container -->
+    <section class="container mx-auto px-4 py-12 max-w-3xl">
+
+        <div class="bg-white shadow-md rounded-xl p-8">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Upload & Upscale Image</h3>
+
+            <!-- Upload -->
+            <input type="file" id="upscaleInput" accept="image/*"
+                class="w-full mb-4 border rounded-lg p-3 cursor-pointer">
+
+            <!-- Preview -->
+            <img id="previewImage" class="hidden w-full rounded-lg shadow mb-6">
+
+            <!-- Scale Options -->
+            <label class="block mb-2 font-medium text-gray-700">Upscale Factor:</label>
+            <select id="scaleFactor" class="w-full border rounded-lg p-3 mb-6">
+                <option value="2">2× Upscale</option>
+                <option value="3">3× Upscale</option>
+                <option value="4">4× Upscale</option>
+            </select>
+
+            <!-- Button -->
+            <button onclick="startUpscale()" 
+                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition">
+                Upscale Image
+            </button>
+
+            <!-- Download -->
+            <a id="downloadUpscaled" class="hidden mt-6 block text-center bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">
+                Download Upscaled Image
+            </a>
+        </div>
+    </section>
+
+    <!-- Ad Placeholder (Bottom) -->
+    <div class="container mx-auto px-4 mb-8">
+        <div class="ad-slot bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+            <p class="text-gray-600 text-sm">Advertisement Space</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">FreeToolBox</h4>
+                    <p class="text-gray-400">Free online tools for text, image, and file manipulation. Fast, secure, and 100% client-side.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="text-tools.html" class="text-gray-400 hover:text-white">Text Tools</a></li>
+                        <li><a href="image-tools.html" class="text-gray-400 hover:text-white">Image Tools</a></li>
+                        <li><a href="file-tools.html" class="text-gray-400 hover:text-white">File Tools</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">About</h4>
+                    <p class="text-gray-400">All tools run 100% in your browser. Your data never leaves your device.</p>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 FreeToolBox. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/tools/imageUpscaler.js"></script>
+
+</body>
+</html>
