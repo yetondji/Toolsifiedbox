@@ -137,11 +137,22 @@ async function startUpscale() {
  */
 function attachMonetagPop(buttonElement) {
     if (!MONETAG_URL) return;
+    const SESSION_KEY = "monetag_download_triggered";
+    const AD_DELAY_MS = 1500; // 1.5 sec delay
+
     buttonElement.addEventListener('click', () => {
-        const adWindow = window.open(MONETAG_URL, '_blank');
-        if (adWindow) {
-            adWindow.blur();
-            window.focus();
+        // Only trigger once per session
+        if (!sessionStorage.getItem(SESSION_KEY)) {
+            setTimeout(() => {
+                try {
+                    const adWindow = window.open(MONETAG_URL, '_blank');
+                    if (adWindow) {
+                        adWindow.blur();
+                        window.focus();
+                    }
+                } catch (e) { /* ignore popup errors */ }
+            }, AD_DELAY_MS);
+            sessionStorage.setItem(SESSION_KEY, "yes");
         }
     });
 }
