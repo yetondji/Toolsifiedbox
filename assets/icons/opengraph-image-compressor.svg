@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
+  <rect width="100%" height="100%" fill="#f97316" />
+  <g fill="#fff" font-family="Arial, Helvetica, sans-serif">
+    <text x="60" y="160" font-size="56" font-weight="700">Image Compressor</text>
+    <text x="60" y="240" font-size="36">Reduce file size while keeping quality</text>
+  </g>
+</svg>
