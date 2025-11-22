@@ -102,31 +102,61 @@
         <div class="bg-white shadow-md rounded-xl p-8">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Upload & Upscale Image</h3>
 
-            <!-- Upload -->
-            <input type="file" id="upscaleInput" accept="image/*"
-                class="w-full mb-4 border rounded-lg p-3 cursor-pointer">
+            <!-- Upload / Drop Zone -->
+            <div id="drop-zone" class="drop-zone border-2 border-dashed border-gray-300 rounded-lg p-6 mb-6 text-center cursor-pointer hover:border-blue-400 transition">
+                <input type="file" id="upscaleInput" accept="image/*" class="hidden">
+                <svg class="w-12 h-12 mx-auto text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l4-4 4 4M7 8l4 4 4-4" />
+                </svg>
+                <p class="font-medium text-gray-700">Drag & drop an image here, or click to browse</p>
+                <p class="text-sm text-gray-500 mt-2">Supports JPG, PNG, WebP. Upscale up to 4× resolution.</p>
+            </div>
 
-            <!-- Preview -->
-            <img id="previewImage" class="hidden w-full rounded-lg shadow mb-6">
+            <!-- Controls and Preview -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <div class="mb-3 text-sm text-gray-600">Original</div>
+                    <img id="previewImage" class="w-full h-72 object-contain rounded-lg bg-gray-50 border p-2 hidden" alt="Original preview">
+                    <div id="original-info" class="text-xs text-gray-500 mt-2 hidden">-</div>
+                </div>
 
-            <!-- Scale Options -->
-            <label class="block mb-2 font-medium text-gray-700">Upscale Factor:</label>
-            <select id="scaleFactor" class="w-full border rounded-lg p-3 mb-6">
-                <option value="2">2× Upscale</option>
-                <option value="3">3× Upscale</option>
-                <option value="4">4× Upscale</option>
-            </select>
+                <div>
+                    <div class="mb-3 text-sm text-gray-600">Upscaled</div>
+                    <div class="h-72 rounded-lg bg-gray-50 border p-2 flex items-center justify-center">
+                        <img id="upscaledPreview" class="max-h-full max-w-full hidden rounded-lg" alt="Upscaled preview">
+                        <div id="upscale-placeholder" class="text-gray-400">No upscaled image yet</div>
+                    </div>
+                    <div id="upscaled-info" class="text-xs text-gray-500 mt-2 hidden">-</div>
+                </div>
+            </div>
 
-            <!-- Button -->
-            <button onclick="startUpscale()" 
-                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition">
-                Upscale Image
-            </button>
+            <div class="mt-6">
+                <label class="block mb-2 font-medium text-gray-700">Upscale Factor:</label>
+                <select id="scaleFactor" class="w-full border rounded-lg p-3 mb-4">
+                    <option value="2">2× Upscale</option>
+                    <option value="3">3× Upscale</option>
+                    <option value="4">4× Upscale</option>
+                </select>
 
-            <!-- Download -->
-            <a id="downloadUpscaled" class="hidden mt-6 block text-center bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">
-                Download Upscaled Image
-            </a>
+                <!-- Progress / Spinner -->
+                <div id="upscale-spinner" class="hidden flex items-center gap-3 mb-4">
+                    <svg class="animate-spin h-6 w-6 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                    <div class="w-full">
+                        <div class="text-sm text-gray-600">Processing image…</div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div id="upscale-progress" class="bg-purple-600 h-2 rounded-full" style="width:0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 items-center">
+                    <button id="upscaleButton" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition">Upscale Image</button>
+                    <a id="downloadUpscaled" class="hidden px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold">Download</a>
+                </div>
+            </div>
         </div>
     </section>
 
