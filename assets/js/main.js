@@ -1,4 +1,4 @@
-// FreeToolBox - Main JavaScript
+// Toolsified - Main JavaScript
 
 // Mobile menu toggle
 function toggleMobileMenu() {

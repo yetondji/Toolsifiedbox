@@ -1,6 +1,6 @@
 /*
 =======================================
- IMAGE UPSCALER TOOL - FreeToolBox
+ IMAGE UPSCALER TOOL - Toolsified
 =======================================
 Features:
 ✔ Upload image

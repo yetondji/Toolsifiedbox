@@ -1,4 +1,4 @@
-FreeToolBox - Project Plan
+Toolsified - Project Plan
 Project Overview
 A multi-page tools website providing 100% client-side text, image, and file manipulation tools with a modern, responsive design similar to TinyWow and Toolerbox.
 
