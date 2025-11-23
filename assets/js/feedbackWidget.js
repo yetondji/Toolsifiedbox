@@ -8,7 +8,7 @@ Configuration:
 */
 
 const TF_FEEDBACK_CONFIG = {
-  ENDPOINT_URL: 'https://script.google.com/macros/s/AKfycbxepm9EMYoAoK-6uuvFfYBnJGIsc8pmN8GPQAdututj5Z9d0qbzbP4emZNFXDELqBkP0Q/exec',
+  ENDPOINT_URL: 'https://script.google.com/macros/s/AKfycbw-qR7JRvUUkWrhQ-mA1B9gwnM2ZOyysuzrParBkRA7Z9PUGx2tA4c1IZw9qqVSnxp_-g/exec',
   SESSION_PREFIX: 'tf_feedback_submitted_',
   BRAND_COLOR: 'bg-blue-600',
   DEBUG: true // set to `false` to disable verbose console logging
@@ -138,13 +138,22 @@ async function tfSubmit(helpful){
     });
     let json = null;
     try { json = await resp.json(); } catch (parseErr) { if (TF_FEEDBACK_CONFIG.DEBUG) console.warn('TFFeedback: response not JSON', parseErr); }
-    if (TF_FEEDBACK_CONFIG.DEBUG) console.log('TFFeedback: response', resp.status, json || await resp.text());
+    let respText = null;
+    if (!json) {
+      try { respText = await resp.text(); } catch(e) { respText = null; }
+    }
+    if (TF_FEEDBACK_CONFIG.DEBUG) console.log('TFFeedback: response', resp.status, json || respText);
     if (json && json.status === 'ok'){
       sessionStorage.setItem(page_key, 'yes');
       tfShowNotification('Thanks for your feedback!', 'success');
       tfCloseModal();
     } else {
-      tfShowNotification('Failed to send feedback', 'error');
+      if (TF_FEEDBACK_CONFIG.DEBUG && respText) {
+        tfShowNotification('Server error: ' + resp.status + ' — see console', 'error');
+        console.error('TFFeedback server response:', resp.status, respText);
+      } else {
+        tfShowNotification('Failed to send feedback', 'error');
+      }
     }
   }catch(err){
     if (TF_FEEDBACK_CONFIG.DEBUG) console.error('TFFeedback: network/error', err);
@@ -226,16 +235,40 @@ function tfInlineSubmit(helpful){
   if (TF_FEEDBACK_CONFIG.DEBUG) console.log('TFFeedback (inline): sending', payload);
   fetch(TF_FEEDBACK_CONFIG.ENDPOINT_URL, {
     method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}, body: form.toString()
-  }).then(async r=>{ let j=null; try{ j=await r.json(); }catch(e){ if (TF_FEEDBACK_CONFIG.DEBUG) console.warn('TFFeedback inline: response not JSON', e); } if (TF_FEEDBACK_CONFIG.DEBUG) console.log('TFFeedback inline: response', r.status, j); return j; }).then(j=>{
-    if (j && j.status === 'ok'){
+  }).then(async r=>{
+    let j = null; let text = null;
+    try{ j = await r.json(); } catch(e){ if (TF_FEEDBACK_CONFIG.DEBUG) console.warn('TFFeedback inline: response not JSON', e); try { text = await r.text(); } catch(e2) { text = null; } }
+    if (TF_FEEDBACK_CONFIG.DEBUG) console.log('TFFeedback inline: response', r.status, j || text);
+    return {status: r.status, json: j, text: text};
+  }).then(obj=>{
+    if (obj.json && obj.json.status === 'ok'){
       sessionStorage.setItem(page_key, 'yes');
       tfShowNotification('Thanks for your feedback!', 'success');
       document.getElementById('tf-inline-expand').classList.add('hidden');
-    } else tfShowNotification('Failed to send feedback', 'error');
+    } else {
+      if (TF_FEEDBACK_CONFIG.DEBUG && obj.text) {
+        tfShowNotification('Server error: ' + obj.status + ' — see console', 'error');
+        console.error('TFFeedback inline server response:', obj.status, obj.text);
+      } else {
+        tfShowNotification('Failed to send feedback', 'error');
+      }
+    }
   }).catch(err=>{ if (TF_FEEDBACK_CONFIG.DEBUG) console.error('TFFeedback inline: network/error', err); tfShowNotification('Network error sending feedback', 'error'); });
 }
 
 // Auto-run
+// Initialize function (was accidentally removed) — builds widget and inline elements
+function tfInit(){
+  try{
+    tfBuildWidget();
+    tfInsertInline();
+    if (TF_FEEDBACK_CONFIG.DEBUG) console.log('TFFeedback: widget initialized');
+    window.TF_FEEDBACK_LOADED = true;
+  } catch (e) {
+    console.error('TFFeedback init error', e);
+  }
+}
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', tfInit);
 } else {

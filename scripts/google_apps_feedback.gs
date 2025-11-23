@@ -24,9 +24,8 @@ function doPost(e) {
   try {
     // Support both JSON POSTs and URL-encoded form posts.
     var data = {};
-    if (e.postData && e.postData.type && e.postData.type.indexOf('application/json') !== -1) {
-      data = JSON.parse(e.postData.contents || '{}');
-    } else if (e.parameter) {
+    if (e.parameter && Object.keys(e.parameter).length > 0) {
+      // Form-encoded data (priority over JSON since this is what browser sends)
       // e.parameter contains form-encoded fields when content-type is application/x-www-form-urlencoded
       data = {
         timestamp: e.parameter.timestamp,
@@ -38,8 +37,8 @@ function doPost(e) {
         email: e.parameter.email,
         device: e.parameter.device
       };
-    } else if (e.postData && e.postData.contents) {
-      // fallback: try parsing contents as JSON
+    } else if (e.postData && e.postData.type && e.postData.type.indexOf('application/json') !== -1 && e.postData.contents) {
+      // JSON fallback: try parsing contents as JSON
       data = JSON.parse(e.postData.contents || '{}');
     } else {
       return ContentService.createTextOutput(JSON.stringify({status: 'no data'})).setMimeType(ContentService.MimeType.JSON);
