@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - Toolsified</title>
+    <meta name="description" content="Generate QR codes from text, URLs, emails, and more. Free online QR code maker with instant preview and download options.">
+    <meta name="keywords" content="QR code, generator, barcode, free tool">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="QR Code Generator - Toolsified">
+    <meta property="og:description" content="Generate QR codes instantly from any text or URL. Perfect for marketing, tracking, and sharing.">
+    <meta property="og:image" content="/assets/icons/opengraph-qr-code.svg">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="QR Code Generator - Toolsified">
+    <meta name="twitter:description" content="Generate QR codes from text, URLs, emails, and more.">
+    <meta name="twitter:image" content="/assets/icons/opengraph-qr-code.svg">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "QR Code Generator",
+      "description": "Free online QR code generator. Create QR codes from text, URLs, emails, phone numbers, and more.",
+      "url": "https://example.com/tools/qr-code-generator.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b border-gray-200">
+            <nav class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+                <a href="/" class="text-2xl font-bold text-blue-600">Toolsified</a>
+                <a href="/" class="text-gray-600 hover:text-blue-600 transition">← Back to Home</a>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-8">
+            <!-- Tool Header -->
+            <div class="mb-8">
+                <h1 class="text-4xl font-bold text-gray-800 mb-2">QR Code Generator</h1>
+                <p class="text-lg text-gray-600">
+                    Generate QR codes from text, URLs, emails, phone numbers, and more. Perfect for marketing, tracking, and sharing information instantly.
+                </p>
+            </div>
+
+            <!-- Tool Container -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <!-- Input Section -->
+                <div class="mb-6">
+                    <label for="qr-input" class="block text-lg font-semibold text-gray-700 mb-3">
+                        Enter text or URL
+                    </label>
+                    <textarea 
+                        id="qr-input"
+                        class="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 resize-none"
+                        rows="4"
+                        placeholder="Paste your text, URL, email, or phone number here...">
+                    </textarea>
+                    <div class="mt-2 text-sm text-gray-500">
+                        <span id="char-count">0</span> / 2953 characters
+                    </div>
+                </div>
+
+                <!-- Quick Type Buttons -->
+                <div class="mb-6">
+                    <p class="text-sm font-semibold text-gray-700 mb-3">Quick Presets:</p>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="setPreset('url')" class="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition">URL</button>
+                        <button onclick="setPreset('email')" class="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition">Email</button>
+                        <button onclick="setPreset('phone')" class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition">Phone</button>
+                        <button onclick="setPreset('wifi')" class="px-4 py-2 bg-orange-100 text-orange-700 rounded-lg hover:bg-orange-200 transition">WiFi</button>
+                    </div>
+                </div>
+
+                <!-- QR Code Size and Correction Level -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label for="qr-size" class="block text-sm font-semibold text-gray-700 mb-2">QR Code Size</label>
+                        <select id="qr-size" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-600">
+                            <option value="200">Small (200x200)</option>
+                            <option value="300" selected>Medium (300x300)</option>
+                            <option value="400">Large (400x400)</option>
+                            <option value="500">Extra Large (500x500)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="qr-correction" class="block text-sm font-semibold text-gray-700 mb-2">Error Correction</label>
+                        <select id="qr-correction" class="w-full p-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-600">
+                            <option value="L">Low (7%)</option>
+                            <option value="M" selected>Medium (15%)</option>
+                            <option value="Q">Quartile (25%)</option>
+                            <option value="H">High (30%)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <button 
+                    onclick="generateQrCode()" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition duration-200"
+                >
+                    Generate QR Code
+                </button>
+            </div>
+
+            <!-- Result Section (Hidden Initially) -->
+            <div id="result-section" class="hidden bg-white rounded-lg shadow-lg p-6">
+                <!-- QR Code Display -->
+                <div class="flex flex-col items-center mb-6">
+                    <div id="qr-code-container" class="bg-gray-50 p-4 rounded-lg border-2 border-gray-200">
+                        <!-- QR Code will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <button 
+                        onclick="downloadQrCode('png')" 
+                        class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg transition flex items-center justify-center gap-2"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3v-6"></path>
+                        </svg>
+                        Download PNG
+                    </button>
+                    <button 
+                        onclick="downloadQrCode('jpg')" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition flex items-center justify-center gap-2"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3v-6"></path>
+                        </svg>
+                        Download JPG
+                    </button>
+                    <button 
+                        onclick="copyQrCode()" 
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-lg transition flex items-center justify-center gap-2"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                        Copy Image
+                    </button>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div id="loading" class="hidden flex items-center justify-center mt-4">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <span class="ml-2 text-gray-600">Generating QR code...</span>
+                </div>
+            </div>
+
+            <!-- Feedback Widget Container -->
+            <div class="mt-8"></div>
+        </main>
+    </div>
+
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/tools/qrCodeGenerator.js"></script>
+</body>
+</html>
