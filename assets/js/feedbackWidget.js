@@ -8,7 +8,7 @@ Configuration:
 */
 
 const TF_FEEDBACK_CONFIG = {
-  ENDPOINT_URL: 'https://script.google.com/macros/s/AKfycbw-qR7JRvUUkWrhQ-mA1B9gwnM2ZOyysuzrParBkRA7Z9PUGx2tA4c1IZw9qqVSnxp_-g/exec',
+  ENDPOINT_URL: 'https://script.google.com/macros/s/AKfycbx1z-PYvqXJKcp9c14Nxjc9BO92tQ2vhk7ZiemDMXg-oROYsLEW70GRFEUY5UQin2vuLQ/exec',
   SESSION_PREFIX: 'tf_feedback_submitted_',
   BRAND_COLOR: 'bg-blue-600',
   DEBUG: true // set to `false` to disable verbose console logging
