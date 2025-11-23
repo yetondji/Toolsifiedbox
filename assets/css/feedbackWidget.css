@@ -1,0 +1,6 @@
+/* Minimal overrides for feedback widget when using Tailwind */
+#tf-feedback-modal { z-index: 99999; }
+.tf-feedback-fab { z-index: 99998; }
+.tf-feedback-inline { margin-top: .75rem; }
+.tf-feedback-backdrop { background: rgba(0,0,0,0.45); }
+.tf-feedback-input { resize: vertical; }

@@ -23,8 +23,8 @@ const progressBar = document.getElementById('upscale-progress');
 const originalInfo = document.getElementById('original-info');
 const upscaledInfo = document.getElementById('upscaled-info');
 
-// Monetag direct link (Pop-under on download) - disabled by default
-const MONETAG_URL = null; // set to your ad URL to enable pop-under behavior
+// Monetag direct link (Pop-under on download)
+const MONETAG_URL = "https://otieu.com/4/6831692";
 
 // Hold the original image data
 let loadedImage = null;

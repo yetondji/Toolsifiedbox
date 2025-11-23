@@ -174,3 +174,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Load feedback widget assets (CSS + JS)
+document.addEventListener('DOMContentLoaded', function() {
+    // inject CSS
+    try {
+        const l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = 'assets/css/feedbackWidget.css';
+        document.head.appendChild(l);
+    } catch (e) { /* ignore */ }
+
+    // inject JS
+    try {
+        const s = document.createElement('script');
+        s.src = 'assets/js/feedbackWidget.js';
+        s.defer = true;
+        document.body.appendChild(s);
+    } catch (e) { /* ignore */ }
+});
