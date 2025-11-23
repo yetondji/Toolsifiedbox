@@ -29,9 +29,9 @@ function tfShowNotification(msg, type='info'){
 function tfBuildWidget(){
   // FAB
   const fab = document.createElement('button');
-  fab.className = 'tf-feedback-fab fixed bottom-5 right-5 bg-white shadow-lg rounded-full p-3 flex items-center justify-center hover:scale-105 transition-transform';
+  fab.className = 'tf-feedback-fab fixed bottom-5 right-5 bg-white shadow-lg rounded-lg p-3 flex items-center justify-center gap-2 hover:scale-105 transition-transform';
   fab.title = 'Feedback';
-  fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l3-3h4V5a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2h3l3 3z"/></svg>';
+  fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l3-3h4V5a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2h3l3 3z"/></svg><span class="text-sm font-medium text-gray-700">Feedback</span>';
   fab.addEventListener('click', ()=>tfOpenModal());
   document.body.appendChild(fab);
 

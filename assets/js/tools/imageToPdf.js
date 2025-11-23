@@ -178,4 +178,28 @@ function downloadPdf() {
     const timestamp = new Date().toISOString().slice(0, 10);
     downloadFile(blob, `images_to_pdf_${timestamp}.pdf`);
     showNotification('PDF downloaded!', 'success');
+    
+    // Trigger monetag pop-under ad after download
+    attachMonetagPop();
+}
+
+function attachMonetagPop() {
+    const MONETAG_URL = "https://otieu.com/4/6831692";
+    const SESSION_KEY = "monetag_download_triggered";
+    const AD_DELAY_MS = 1500;
+    
+    // Check if already triggered this session
+    if (sessionStorage.getItem(SESSION_KEY)) {
+        return;
+    }
+    
+    // Mark as triggered
+    sessionStorage.setItem(SESSION_KEY, 'true');
+    
+    // Delayed pop-under
+    setTimeout(() => {
+        if (window.open) {
+            window.open(MONETAG_URL, 'monetag_pop', 'width=800,height=600');
+        }
+    }, AD_DELAY_MS);
 }
