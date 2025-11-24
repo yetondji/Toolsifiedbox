@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Image Generator – Free, Fast & Stunning (Flux WebGPU)</title>
+  <meta name="description" content="Create high-quality AI images using our free text-to-image generator powered by Flux WebGPU. No API, no limits, runs directly in your browser.">
+  <link rel="canonical" href="/tools/ai-image-generator.html">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="AI Image Generator – Free, Fast & Stunning (Flux WebGPU)">
+  <meta property="og:description" content="Create high-quality AI images using our free text-to-image generator powered by Flux WebGPU. No API, no limits, runs directly in your browser.">
+  <meta property="og:image" content="/assets/og/ai-image-generator.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Image Generator – Free, Fast & Stunning (Flux WebGPU)">
+  <meta name="twitter:description" content="Create high-quality AI images using our free text-to-image generator powered by Flux WebGPU. No API, no limits, runs directly in your browser.">
+  <meta name="twitter:image" content="/assets/og/ai-image-generator.png">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "name":"AI Image Generator",
+    "description":"Browser-based AI image generator using Flux WebGPU.",
+    "url":"/tools/ai-image-generator.html",
+    "applicationCategory":"MultimediaApplication",
+    "operatingSystem":"Web"
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body class="bg-gray-50">
+  <nav class="bg-white shadow-md sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="/index.html" class="text-2xl font-bold text-blue-600">Toolsified</a>
+      <div class="hidden md:flex gap-4">
+        <a href="/index.html" class="text-gray-700">Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mx-auto px-4 py-12">
+    <div class="max-w-5xl mx-auto">
+      <header class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-gray-800">AI Image Generator</h1>
+        <p class="text-gray-600 mt-2">Generate stunning images using AI powered by Flux WebGPU — 100% free and runs entirely in your browser.</p>
+      </header>
+
+      <section class="bg-white rounded-lg shadow p-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2">
+            <label class="font-semibold text-sm">Prompt</label>
+            <textarea id="ai-prompt" rows="6" placeholder="A dramatic sunset over mountains, cinematic lighting" class="w-full mt-2 p-3 border rounded"></textarea>
+
+            <div class="mt-4 flex items-center gap-3">
+              <button id="generate-btn" class="btn-primary bg-blue-600 text-white px-4 py-2 rounded-md">Generate Image</button>
+              <div id="status" class="text-sm text-gray-600">Model not initialized</div>
+              <div id="spinner" class="ml-auto" aria-hidden="true"></div>
+            </div>
+
+            <div class="mt-4">
+              <label class="font-semibold text-sm">Output</label>
+              <div id="output-area" class="mt-2 bg-gray-100 rounded p-4 min-h-[320px] flex items-center justify-center">
+                <canvas id="ai-canvas" width="512" height="512" class="max-w-full"></canvas>
+              </div>
+
+              <div class="mt-4 flex gap-2">
+                <button id="download-btn" class="px-4 py-2 bg-green-600 text-white rounded-md">Download PNG</button>
+                <button id="reset-btn" class="px-4 py-2 bg-gray-200 rounded-md">Reset</button>
+              </div>
+            </div>
+          </div>
+
+          <aside class="p-4 border-l">
+            <h3 class="font-semibold">Advanced Settings</h3>
+
+            <div class="mt-3">
+              <label class="text-sm">Image Size</label>
+              <select id="ai-size" class="w-full p-2 border rounded mt-1">
+                <option value="512">512 × 512</option>
+                <option value="768">768 × 768</option>
+                <option value="1024">1024 × 1024</option>
+              </select>
+            </div>
+
+            <div class="mt-3">
+              <label class="text-sm">Steps</label>
+              <input id="ai-steps" type="range" min="1" max="8" value="6" class="w-full mt-2">
+              <div class="text-xs text-gray-500 mt-1">Less steps = faster (1–8)</div>
+            </div>
+
+            <div class="mt-3">
+              <label class="text-sm">Style Preset</label>
+              <select id="ai-style" class="w-full p-2 border rounded mt-1">
+                <option value="realistic">Realistic</option>
+                <option value="cinematic">Cinematic</option>
+                <option value="digital">Digital Art</option>
+                <option value="anime">Anime</option>
+              </select>
+            </div>
+
+            <div class="mt-6 text-xs text-gray-500">
+              <strong>Note:</strong> This page expects the Flux WebGPU runtime and model shards to be placed in <code>/assets/models/flux/</code>. See instructions below.
+            </div>
+          </aside>
+        </div>
+
+        <section class="mt-6 bg-gray-50 p-4 rounded text-sm text-gray-700">
+          <h4 class="font-semibold">Model status & logs</h4>
+          <pre id="log" class="text-xs mt-2 max-h-40 overflow-auto bg-white p-3 rounded border text-gray-600">Logs will appear here.</pre>
+        </section>
+
+        <section class="mt-6">
+          <h4 class="font-semibold">Model files (placeholders)</h4>
+          <ul class="text-sm text-gray-600 mt-2 list-disc pl-5">
+            <li>/assets/models/flux/runtime/flux-webgpu.min.js (Flux runtime)</li>
+            <li>/assets/models/flux/model-0001.bin (shards)</li>
+            <li>/assets/models/flux/tokenizer.json</li>
+            <li>See <code>/assets/models/flux/README.md</code> for full instructions</li>
+          </ul>
+        </section>
+
+      </section>
+
+      <div class="mt-8 text-sm text-gray-600">
+        <strong>Important:</strong> This tool runs client-side and requires a modern browser with WebGPU support (Chrome on desktop with experimental flags or recent Edge/Chrome builds). If WebGPU is not available, a graceful message appears and you may use the fallback preview image.
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/tools/aiImageGenerator.js"></script>
+</body>
+</html>
